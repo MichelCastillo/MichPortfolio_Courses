@@ -1,0 +1,29 @@
+########################################################################################################################
+Sets
+    - Are abstract data types that can store certain values without any particular order and no repeated values (no duplicates)
+    - A common way of visualizing sets is the Venn-diagram approaches
+    - we can show interactions easily with diagrams
+        - there are several important operations on sets such as union or intersection
+
+########################################################################################################################
+Sets VS Maps Comparison
+    - HashSet and LinkedHashSet rely heavily on a one-dimensional array and hash function
+    - This is why the average-case running time is O(1) that may be reduced to O(N) because of collisions
+    - LinkedHashSet uses double-linked list data structure in addition to maintain insertion order
+    - TreeSet uses balanced binary search tree
+    - There no collisions at all but running time is O(logN)
+
+    Sets Comparison
+        - HashSet and LinkedHashSet
+            - use arrays and hash-functions under the hood
+            - we can achieve O(1) constant running time
+            - worse case running time is O(LogN)
+            - can store null keys as well
+
+        - TreeSet
+            - uses balanced binary search tree + maintains order
+            - we can achieve guaranteed O(logN) logarithmic running time
+            - can not store null keys + no parameters to tune
+            - Need less memory
+
+########################################################################################################################

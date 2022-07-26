@@ -1,0 +1,148 @@
+########################################################################################################################################
+List
+    - Ordered collection that allows us to store and access items in a sequential manner.
+    - extends from Collection and Iterable interace
+    - Can include duplicate elements (while sets can not)
+    - it gives the user full visibility and control over the ordering of its elements
+
+########################################################################################################################################
+Arrays
+    - the aim is to make operations as fast as possible: inserting new items or removing givenitems from the data structure
+    - arrays are data structures where all the items are identified by an integer value starting with 0 - the so-called index
+    - the items of the array are located right next to each other in the main memory (RAM) - rhey can be accessed by the index
+
+ ADVENTAGE: Accessing the items - random access
+
+ nums[]
+    - every single item (value) can be identified with a given index
+    - indexes start with 0
+    - usually we can store items of the same type
+    - random access: item are located right next to each other so we can get them with the help of the index - in O(1) running time
+
+nums[][]
+    - every single item(value) can be identified with 2 indexes - rowindex and columnindex
+    - indexes start with 0
+    - usually we can store items of the same type
+    - random access: items are located right next to each other so we can get them with the help of the index - in O(1) running time
+
+Static array: size of the array does not change
+Dynamic array: size of the array may change dinamically.
+
+Applications of Arrays:
+    - more complex data structures rely heavily on arrays because of random indexing - O(1) access of items with known indexes
+    - stacks, queues and hash-tables (dictionaries)
+    - numerical methods use arrays: most the operations can be achieved quite efficiently - matrix related operations
+
+########################################################################################################################################
+Arrays Operations
+    - Adding items: we can insert new items at the end of the data structure until the data structure is not full - O(1) running time
+        + What if the data structure becomes full?
+            - have to allocate a larger chunk of memory in the RAM (usually 2x the size of the actual array)
+            - have to copy the existing items one by one to the new array.
+            - because of these operations: the resize operation take O(N) linear running time complexity - bottleneck
+        + start with a small sized array:
+            - we do not waste memory but we have to resize the array often with O(N) running time
+        + allocate a huge array at the beginning:
+            - We do waste memory because of the large size at least we do not have to bother with the resize operations
+
+    MEMORY AND RUNNING TIME TRADE-OFF
+
+    - Adding numbers to arbitrary positions: we want to insert an item to an arbitrary position - so associated with a given index
+        - It's an O(N) linear running time algorithm because the items must be shifted (in worst-case: all the items)
+
+    - removing last item: removing the last item fo an array data structure is quite easy and fast operation - O(1) running time
+
+    - removing item from arbitrary position: usually we do know the index of the item we want to remove. After removing the item we have to deal with the so called "holes" in the data structures
+        + first we have to find the item in O(N) running time
+        + then remove the item in O(1)
+        + and finally have to shift the other items in O(N)
+
+    CONCLUSION:
+        - Manipulating the last item (inserting or removal) -> O(1): this is why we like arrays
+        - Manipulating arbitrary item (insertion or removal) -> O(N): if these kinds of operations will dominate, then array data structure is not the best option.
+
+    ADVENTAGES:
+        - The best feature of arrays is random access: we can access arbitrary items extremely fast with indexes
+        - quite an easy data structure: easy to understand and easy to implement as well
+        - arrays are fast data structures in the main
+        - use arrays when you want to manipulate the last items of the data structure or you want to access items with KNOWN INDEXES
+
+    DISADVENTAGES:
+        - We have to know the number of items we want to store at compile-time: so it's not a dynamic data structure
+        - since it's not dynamic: whenever the data structure is full, we have to resize it on O(N) linear running time
+        - usually we can not store items with different types in an array - of course Python is exception
+
+########################################################################################################################################
+Linked List
+    - It's another data structure - so the aim is to be able to store items efficiently (insertion and removal operations)
+    - Arrays have a huge disadventage: there may be "holes" in the data structure and we have to shift a lot of items
+    - this problem can be eliminated by linked list
+        + we have access to the first node of a linked list (head node)
+        + other items can be accessed starting with this node
+        + last node of the linked list is pointing to NULL
+
+    - Nodes:
+        - Structure:
+            + Data
+            + Reference to other node
+
+        - Every node stores the data itself and reference the next node in the linked list data structure
+        - this is why linked list need more memory than arrays
+        - it has an advantage - there can not be "holes" in the data structure so there is no need for shifting items
+
+    - easy data structures and easy to implement them
+    - the items are not stored next to each other in the memory - so there is NO RANDOM INDEXING
+    - we can implement more complex data structures and abstract data types such as stacks and queues
+    - FINDING ARBITRARY ITEM IN THE LINKED LIST STILL HAS O(N) LINEAR RUNNING TIME
+
+########################################################################################################################################
+Linked List Operations
+    - Huge advantage of linked list is that we can insert items at the beginning of the data structure fast - O(1)
+    - Huge disadvantage of linked list is that it is a slow operation to insert items at the end - O(N)
+        + we can access the head node exclusively - so we have to start here always
+        + we have to find the item we want to remove (linear search) in O(N) running time
+
+    Operations:
+        - Manipulation the first item (insertion or removal) - O(1) - this is why we like linked list
+        - Manipulation arbitrary item - O(N) - If we have to do several of these operations then linked list is not the best option possible.
+
+    Advantages:
+        - Dynamic data structures: they can acquire memory at run-time by inserting new nodes
+        - no need for resizing the data structures - as we have seen with arrays
+        - we can grow the data structure organically - not a problem if we do not know the size at compile-time
+        - manipulating the first item is fast - O(1)
+        - can store different sized items - arrays assume the items have the exact same size
+
+    Disadvantages:
+        - need more memory because of the references
+        - there is no random access - we can only access the first node (head)
+        - can not got backwards - how to get the previous node? (Double linked list)
+        - not predictable - the running time of the application relies heavily on the operations the users do
+        - still have not solved the main issue - how to search for arbitrary items faster than O(N) linear running time.
+
+########################################################################################################################################
+Vector vs ArrayList
+    - Los array list, cuando se quedan sin tamaño, duplican su valor original - Ej: 10 -> 20 -> 40 -> ...
+    - Los vectores utilizan un field llamado capacityIncrement -> cuando se quedan sin espacio, se aumentan usando este valor
+    - En lso vectores, estos adquieren el lock en cada iteración dentro de un loop, a diferencia de los arrays que lo adquieren en virtud de las operaciones que se ejecutan
+        - Los vectores son Synchronized
+
+########################################################################################################################################
+Stacks:
+    - it's an abstract data type - and it can be implemented either with arrays or with linked lists
+    - it has a so-called LIFO structure - the last item we inserted is the first item we take out
+    - basic operations are pop() -> remove the last item we have inserted
+                           push() ->
+                           peek() ->
+    - most of the mmodern programming languages are stack-oriented
+    - they define most basic operations (adding two numbers) as taking their arguments from the stack and placing any return values back on the stack
+
+    Stack Applications:
+        - Graphs algorithms rely heavily on stacks such as depth-first search can be implemented with stacks
+        - finding Eulerian cycles in a G(V, E) graph
+        - finding strongly connected components in a given G(V, E) graph
+
+
+    - We have considered Vectors - and we came to the conclusion that ArrayList is a better option usually.
+    - Stack extends the Vector class - which means that stacks are inherently synchronized.
+    - however synchronization is not always needed - in such cases it is better to use ArrayDeque

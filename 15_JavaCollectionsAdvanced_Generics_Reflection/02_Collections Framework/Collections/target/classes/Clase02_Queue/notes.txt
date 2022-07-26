@@ -1,0 +1,18 @@
+########################################################################################################################
+Queues
+    - It's an abstract data type - and it can be implemented either with arrays or with linked lists
+    - It has a so-called FIFO structure - the first item we inserted is the first item we take out
+    - basic operations are enqueue() -> insert
+                           dequeue() -> remove
+                           peek() -> returns the last item without removing it
+    - has several applications in operating systems and thread management (multithreading)
+
+########################################################################################################################
+Queues Applications
+    - Are useful when a resource is shared with several consumers (for example, threads)
+    - Threads are stored in queues
+    - queues are important in CPU scheduling
+    - when data is transferred asynchronously (data not necessarily received at same rat as sent) between two processes
+    - graph algorithms rely heavily on queues: breadth-first search use queue as underlying abstract data type
+
+########################################################################################################################

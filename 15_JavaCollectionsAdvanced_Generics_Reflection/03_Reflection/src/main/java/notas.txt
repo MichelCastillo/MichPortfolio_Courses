@@ -1,0 +1,33 @@
+########################################################################################################################
+Reflection
+    - is a programming language's ability to inspect and dynamically call methods, calls, etc.
+    - we can inspect the source code dynamically at run-time
+    - because of object-oriented design (polymorphism) we may not know the classes and methods at compile time
+    - we can get classes with getClass() method
+    - Example
+
+    public interface Vehicle{...}
+
+    public class Bus implements Vehicle{...}
+
+    public class Car implements Vehicle{...}
+
+    Debido al polimorfismo, en tiempo de compilacionno podríamos saber que objetos hay detrás de cada instancia de Vehiculo
+        dado que se encuentran "enmascarados" por la interfaz Vehicle. Por lo que seria dificil acceder a sus respectivos métodos
+        Por eso Reflection es muy importante:
+            - it's important since it lets you write programs that do not have to know everything at compile time
+            - such as inheritance relationships, etc
+            - this is how we can make dynamic programs as the classes and methods may be tied together at run-time
+            - several frameworks use reflection - Junit or Spring Framework
+            - For example, JUnit looks for methods with the @Test annotations
+            - the framework will call these methods wen we run the tests
+
+########################################################################################################################
+Singleton Pattern
+    - Singleton patter is a creational desing pattern
+    - It lets you to ensure that a class has only one instance while providing a global access point to this instance
+    - it ensures that a given class has just a single instance
+    - the singleton pattern provides a global access point to that given instance
+    - When to use the singleton pattern?
+        + we can controll access to a shared resource such as files, databases or thread pools (when dealing with multithreading)
+        + it's extremely crucial in logging

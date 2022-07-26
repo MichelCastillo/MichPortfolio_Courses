@@ -1,0 +1,153 @@
+########################################################################################################
+Associative Arrays
+    - Associative arrays (maps or dictionaries) are abstract data types
+    - Composed of a collection of key-values pairs where each key appears at most once in the collection
+    - Most of the times we implement associative arrays with hashtables but binary searchs trees can be used as well
+    - The aim is to reach (01) time complexity for most of operations
+    - Performance:
+        + Finding an arbitrary item in an array takes O(N) linear running time
+        + But it has O(1) random access
+        + We can do better with binary search trees with O(logN) logarithmic running times
+        + AVL trees and red-black trees can guarantee O(logN) running times
+        + we can combine random access with hash-functions to end up with O(1) running times
+    - There are several operations we want to implement - and we want these operations to have O(1) running time
+        + adding (key, value) pairs to the collection
+        + removing (key, value) pairs from the collection
+        + lookup a given value associated with a given key
+        + the key and value pairs are unordered - this is why associative arrays do not support sorting as an operation
+
+########################################################################################################
+Hashtables
+    - The motivation is that wer want to store (key, value) pairs efficiently - so that the insert and remove operations takes O(1) running time
+    - How to achieve O(1) running times for insertion and removal operations?
+    - We should transform the key into an array index - to achieve random access
+    - This is why keys must be unique to avoid using the same indexes
+    - h(x) hash-function transforms the key into an index in the range [0, m-1]
+        + The h(x) hash-function maps keys to array indexes in the array to be able to use random indexing and achieve O(1) running time: KEYS -> BUCKETS (ARRAYS SLOTS)
+        + In general we have N items we want to store in m buckets (size of the underlying array)
+        + The h(x) hash-function defines the relationships between the keys and the array indexes
+
+    - Hashfunctions
+        + Transforms they keys into array indexes
+        + it should handle any types - strings, floats, integers or even custom object as well
+        + if we have integer keys we just have to use the modulo (%) operator to transform the number into the range [0, m-1] - calculamos el resto con el tamaño del arreglo para encontrar el indice del array. En el array, se almacena el par (kay,value)
+        + we can use the ASCII values of the letters when dealing with strings
+        + we can use the ASCII values for the characters to end up with numerical representation and we have to make sure the index is in the range [0,m-1]
+        + The h(x) hash-functions distributes they keys uniformly into buckets (array slots).
+        + Que ocurre cuando el cálculo de la hash-function nos devuelve mas de una vez el mismo slot del array ?
+
+########################################################################################################
+Hashtables - Collisions
+    - Collisions occur when the h(x) hash-functions maps two keys to the same array slot (bucket)
+    - In general, we have N items we want to store in m buckets (m -> size of the underlying array)
+        + If the h(x) hash-function is perfect then there are no collisions
+        + In real-world there will be collisions because there are no perfect hash functions
+    - There are several approaches to deal with collisions:
+        + CHAINING: we store the items in the same bucket (with same indexes) in a linked list data structure
+            - in worst case scenario, the h(x) hash-function puts all the items into the same bucket (array slot)
+            - we end up with a linked list with O(N) linear running time for most of the operations
+
+        + OPEN ADDRESSING: if we come to the conclusion that there is a collision then we generate a new index for the item (try to find another bucket)
+            - Linear probing: if collision happened at array index k then we try index k+1, k+2, k+3... unitl we find an empty bucket
+                - not always the best option possible because there will be clusters in the underlying array
+                - but it has better cache performance than other approaches
+            - Quadratic probing: if collision happened at array index k then we try successive values of an arbitrary quadratic polynomial (array slots 1, 4, 9, 16 ... steps aways from the collision)
+                - there will be no clusters (unlike liear probing)
+                - but no cache advantage (items are far away in memory)
+            - Rehasing: if collision happened at array index k then we use the h(x) hash-function again to generate a new index
+
+    - Cases
+        TASK                    AVERAGE-CASE                    WORST-CASE
+        memory complexity       0(N)                            O(N)
+        search                  0(1)                            O(N)
+        insertion               0(1)                            O(N)
+        deletion                0(1)                            O(N)
+
+########################################################################################################
+Dynamic Resizing
+
+    - The p(x) probability of collision is not constant
+    - the more items are there in the hashtable the higher p(x) probability of collision
+    - This is why we have to define a new parameter of the hashtable - the so-called load factor
+    - n / m -> n is the number of actual items in the array data structure and m is the size of the array - defines a typical memory and running time trade-off
+        + SMALL LOAD FACTOR (around 0)
+            - the hashtable is nearly empty which means low p(x) probability of collisions
+            - but of course a lot of memory is wasted
+        + HIGH LOAD FACTOR (AROUND 1)
+            - the hashtable is nearly full which means high p(x) probability of collisions
+            - no memory is wasted but the running time may be reduced to O(N) linear running time
+    - the p(x) probability of collision is not consant
+    - the more items are there in the hashtable the higher the p(x) probability of collision
+    - this is why we have to define a new parameter of the hashtable - the so-called load factor
+    - SOMETIMES WE HAVE TO RESIZE THE HASHTABLE
+    - Performance relies heavily on the load factor. Sometimes it's better to use memory to achieve faster running times
+        + when the load factor is > 0.75 then Java resize the hashtable automatically to avoid too many collisions
+        + Python does the same when the load factor > 0.66
+    - Dynamic Resizing:
+        + So sometimes it is better to resize and change the size of the underlying array data structure
+        + but the problem is that the hash values are depending on the size of the underlying array data structure
+        + so we have to consider all the items in the old hashtable and insert them into the new one with the h(x) hash-function
+        + it takes O(N) linear running time - this fact may make dynamic-sized hash tables inappropriate for real-time applications
+
+########################################################################################################
+Tree Data Structures
+    - Arrays can manipulate the last item in O(1) constant running time complexity that is quite fast
+    - Linked List can manipulate the first item of the data structure fast
+    - Searching for an arbitrary item takes O(N) linear running time for both data structures
+    - WHAT IF THE ARRAY DATA STRUCTURE IS SORTED?
+        + we can search for arbitrary item in O(LogN) logarithmic time complexity
+        + this is the concept behind binary search
+
+    - Binary Search Trees
+        + every node in the tree can have at most 2 children (left child and right child)
+        + left child is smaller than the parent node
+        + right child is greater than the parent node
+        + we can access the root node exclusively and all other nodes can be accessed via the root node
+        + PUEDE OCURRIR QUE UN LADO DEL ARBOL QUEDE MUY POBLADO (NO BALANCEADO) - Para solucionar esto existe:
+            - Red-Black Trees:
+                + it's a balanced data structure invented back in 1978 by Leonidas Guibas and Robert Sedgewick
+                + this data structure has guaranteed O(logN) running time
+                + the running time of binary search trees depends on the h (height) of the binary search tree
+                + AVL trees are faster than red-black trees because they are more rigidly balanced but needs more work
+                + but it's faster to construct a red-black tree
+                + operating systems relies heavily on these data structures
+                + CASES
+                    TASK                    AVERAGE-CASE            WORST-CASE
+                    space complexity        O(N)                    O(N)
+                    deletion                O(logN)                 O(logN)
+                    insertion               O(logN)                 O(logN)
+                    search                  O(logN)                 O(logN)
+        + Trees Rotations
+            - This is when we apply right rotation on the root node
+            - we have to update the references for several nodes in O(1) running time
+            - the binary search tree properties remains the same (parent-child relationships)
+            - the in-order traversal is the same after the rotation (extremely crucial)
+
+########################################################################################################
+Maps Comparison
+
+    - HashMap and LinkedHashMap rely heavily on a one-dimensional array and a hash-function
+    - this is why the average-case running time is O(1) that may be reduced to O(N) because of collisions
+    - LinkedHashMap uses doubly-linked list data structure in addition to maintain insertion order
+    - TreeMap uses balanced binary search tree
+    - there no collisions at all but running time is O(logN)
+
+    - HashMap and
+      LinkedHashMap:
+        + use arrays and hash-functions
+          under the hood
+
+        + we can achieve O(1) constant running time
+
+        + word case running time is O(logN)
+
+        + can store null keys as well
+
+    - TreeMap:
+        + uses balanced binary search trees + maintains order
+
+        + we can achieve guaranteed O(logN) logarithmic running time
+
+        + can not store null keys + no parameters to tune !!!
+
+        + NEEDS LESS MEMORY !!!

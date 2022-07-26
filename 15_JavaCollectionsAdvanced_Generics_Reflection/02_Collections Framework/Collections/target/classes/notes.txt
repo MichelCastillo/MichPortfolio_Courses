@@ -1,0 +1,28 @@
+Collections Structure:
+    - Iterable -> gracias a esto podemos usar iterator() y forEach() loop
+        - Collection
+            - List
+                - ArrayList
+                - LinkedList
+                - Vector
+                    - Stack
+            - Queue
+                - PriorityQueue
+                - Deque
+                - ArrayDeque
+            - Set
+                - HashSet
+                - LinkedHashSet
+                - SortedSet
+                - TreeSet
+    - Map
+        - HashTable
+        - HashMap
+        - LinkedHashMap
+        - SortedMap
+            - TreeMap
+
+Running Time of Algorithms (Complexity Theory)
+ O(1) -> CONSTANT RUNNING TIME COMPLEXITY: we want to swap two tiems with known idexes in a given one-dimensional array
+ O(N) -> LINEAR RUNNING TIME COMPLEXITY: we want to find an unknown item in a one-dimensional array (linear search)
+ O(logN) -> LOGARITHMIC RUNNING TIME COMPLEXITY: we want to find an unknown item a sorted one-dimensional array (binary search)
