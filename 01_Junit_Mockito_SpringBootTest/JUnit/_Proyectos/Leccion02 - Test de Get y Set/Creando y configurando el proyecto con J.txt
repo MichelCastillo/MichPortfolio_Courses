@@ -1,0 +1,90 @@
+Creando y configurando el proyecto con JUnit5
+
+1- Ya con el proyecto creado, agregamos la dependencia junit5-jupiter
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.2</version>
+        </dependency>
+
+        Damos click en Load Maven changes
+
+2- Creamos un package en main, clase Cuenta
+
+    package org.mich.junit5app.ejemplos.models;
+
+    import java.math.BigDecimal;
+
+    public class Cuenta {
+
+        private String persona;
+        private BigDecimal saldo;
+        
+        public Cuenta() {
+            
+        }
+
+        public String getPersona() {
+            return persona;
+        }
+
+        public void setPersona(String persona) {
+            this.persona = persona;
+        }
+
+        public BigDecimal getSaldo() {
+            return saldo;
+        }
+
+        public void setSaldo(BigDecimal saldo) {
+            this.saldo = saldo;
+        }
+    }
+
+3- Creamos los test. Nos paramos en la clase cuenta, Alt + Insert -> Test...
+    - Por convencion, el nombre de la clase de Test es CuentaTest, con el mismo nombre del package pero de /src/test
+
+    @Test -> Para indicarle a la plataforma que tiene que ejecutarse una prueba sobre un método. Para ello, este metodo debe de tener un modificador de acceso default o package
+
+    Atajo: Alt + Insert -> Create TestMethod
+    Atajo: Ctrl + Shift + f10 -> ejecutar test
+
+        @Test
+        void testNombreCuenta() {
+
+            //Instanciamos la clase que queremos probar
+            //Cuenta cuenta = new Cuenta();
+            Cuenta cuenta = new Cuenta("Andres", new BigDecimal("1000.12345"));
+            //cuenta.setPersona("Andres");
+
+            //Declaramos lo que queremos probar
+            String nombreEsperado = "Andres";
+            String nombreReal = cuenta.getPersona();
+
+            //Empezamos a probar a través del método estático de la clase Assertion
+            Assertions.assertEquals(nombreEsperado, nombreReal);
+
+            //Usamos Assertions.assertTrue
+            Assertions.assertTrue(nombreEsperado.equals("Hola"));
+        }
+
+4- Creamos el método para testear el saldo
+
+    @Test
+    void testSaldoCUenta() {
+        //Creamos el objeto cuenta
+        Cuenta cuenta = new Cuenta("Andres", new BigDecimal("1000.12345"));
+
+        //Verificamos si esta correcto, transformando un BigDecimal a Double
+        assertEquals(1000.12345, cuenta.getSaldo().doubleValue());
+
+        //Chequeamos que el saldo nunca sea negativo
+        //Usamos la constante BigDecima.ZERO
+        assertFalse(cuenta.getSaldo().compareTo(BigDecimal.ZERO) < 0);
+
+        //Negamos la expresion de arriba
+        assertTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO) > 0);
+    }
+
+    Nota: Los métodos que vamos creando no deben tener relacion unos con otros.

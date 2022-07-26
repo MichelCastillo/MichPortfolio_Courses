@@ -1,0 +1,35 @@
+Leccion 01 - Intruducción JUnit
+
+Qué es JUnit5?
+    Es un framework para escribir pruebas unitarias de nuestro código y ejecutarlas en la JVM. Utiliza programación funcional y lambda e incluye varios estilos diferentes de pruebas, configuraciones, anotaciones, ciclo de vida, etc.
+
+Arquitectura:
+
+    A diferencia de JUnit4, la versión 5 no es de caracter monolítico.
+
+    - JUnit Platform
+        - Vendría a ser el core de JUnit
+        - Es la libreria principal, asociada al contexto de ejecución del test. Es quien termina ejecutando los test.
+        - Como desarrolladores, nunca vamos a interaccionar con este componente, dado que está solo asociado a la ejecución (vamos a interactuar con Jupiter)
+        - Se encuentra el motor de ejecución
+        - Nos permite lanzar test de otros frameworks (integración - API)
+        - Integración con IDEs, build tools (Gradle, Maven) y Consola
+    - JUnit Jupiter
+        - Es un API para escribir nuestros tests
+        - Agrega un nuevo modelo de programación y características en JUnit 5
+        - Nuevas anotaciones y estilos de testing
+        - Permite escribir extensiones
+        - Anotaciones:
+            - @Test: 
+            - @DispalName: desplegar o mostrar el nombre del test (no existia antes)
+            - @Nested: para dar una jerarquía en nuestras pruebas unitarias
+            - @Tag: categorizar elementos
+            - @ExtendedWith: 
+            - @BeforeEach: Ejecutar antes de cada metodo de test
+            - @AfterEach: Ejecutar después de cada metodo de test
+            - @BeforeAll: BeforeClass - ejecute antes de todos los métodos, 1 sola vez
+            - @AfterAll: Ejecutar después de todos los métodos de prueba
+            - @Disable: deshabilitar la ejecucion de un metodo
+    - JUnit Vintage
+        - Nos permite integrar la versión 3 y 4 con un proyecto de JUnit 5.
+

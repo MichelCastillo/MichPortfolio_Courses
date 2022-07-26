@@ -1,0 +1,48 @@
+-------------------------------------------------------------------------------
+Test set: org.mich.junit5app.ejemplos.models.CuentaTest
+-------------------------------------------------------------------------------
+Tests run: 67, Failures: 11, Errors: 0, Skipped: 9, Time elapsed: 12.233 s <<< FAILURE! - in org.mich.junit5app.ejemplos.models.CuentaTest
+testDebitoCuentaParametrizadoStringsCSVFile2{String, String, String, String}[1]  Time elapsed: 0.017 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <John> but was: <Andres>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSVFile2(CuentaTest.java:405)
+
+testDebitoCuentaParametrizadoStringsCSVFile2{String, String, String, String}[3]  Time elapsed: 0.002 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <maria> but was: <Maria>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSVFile2(CuentaTest.java:405)
+
+testDebitoCuentaParametrizadoStringsCSVFile2{String, String, String, String}[5]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Lucas> but was: <Luca>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSVFile2(CuentaTest.java:405)
+
+testDebitoCuentaParametrizadoStringsCSVFile2{String, String, String, String}[6]  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSVFile2(CuentaTest.java:406)
+
+testDebitoCuentaParametrizadoStringsCSVFile{String}[7]  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSVFile(CuentaTest.java:361)
+
+testDebitoCuentaParametrizadoStringsCSV2{String, String, String, String}[1]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <John> but was: <Andres>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSV2(CuentaTest.java:388)
+
+testDebitoCuentaParametrizadoStringsCSV2{String, String, String, String}[3]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <maria> but was: <Maria>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSV2(CuentaTest.java:388)
+
+testDebitoCuentaParametrizadoStringsCSV2{String, String, String, String}[5]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <Lucas> but was: <Luca>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSV2(CuentaTest.java:388)
+
+testDebitoCuentaParametrizadoStringsCSV2{String, String, String, String}[6]  Time elapsed: 0.001 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSV2(CuentaTest.java:389)
+
+testDebitoCuentaParametrizadoStringsCSV{String, String}[5]  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStringsCSV(CuentaTest.java:351)
+
+testDebitoCuentaParametrizadoStrings{String}[5]  Time elapsed: 0 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at org.mich.junit5app.ejemplos.models.CuentaTest$PruebasParametrizadasTest.testDebitoCuentaParametrizadoStrings(CuentaTest.java:330)
+

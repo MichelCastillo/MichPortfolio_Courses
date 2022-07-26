@@ -1,0 +1,33 @@
+JUnit 5 - Leccion 1: Introducción pruebas unitarias
+
+Paso para el desarrollo de software:
+
+    Diseño
+    Escribir un método
+    Probar nuestro código
+
+ Necesidad de realizar pruebas unitarias
+
+
+ Input (Datos de entrada) -> Pieza de Código -> Output
+
+ Cómo probamos la salida con ese Output?
+    - Tenemos nuestros datos/resultados esperados
+    - Y los datos/resultados obtenidos
+    - Lo que hacemos es compararlos
+
+Acá es cuando entra JUnit:
+    - Nos permite crear nuestras pruebas mucho más agilmente
+    - Nos permite crear nuestras pruebas en una sola clase
+    - Podemos testear multiples escenarios en una sola prueba unitaria
+    - Nos permite ejecución de pruebas unitarias automáticas y continuas
+
+Existe un principio en la programación llamado Open/Close:
+    - Abierto a la extensión
+    - Cerrado a la modificación
+
+Qué son las pruebas unitarias?:
+    Es un proceso de examen para verificar que una pieza de código cumple con ciertas reglas de negocio y afirmar un resultado esperado.
+
+Qué es Junit?:
+    Es una libreria de java para escribir y ejecutar repetibles pruebas unitarias.

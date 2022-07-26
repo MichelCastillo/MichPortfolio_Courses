@@ -1,0 +1,47 @@
+Test Driven Project:
+
+1- Creamos el método para testear dos objetos por referencia y valor
+
+2- Por referencia (tenemos que devolver true en caso de que los objetos NO sean los mismos)
+
+        @Test
+        void testReferenciaCuenta() {
+            //Comparando dos objetos cuenta por referencia y NO por valor
+            Cuenta cuenta1 = new Cuenta("John", new BigDecimal("8900.9997"));
+            Cuenta cuenta2 = new Cuenta("John", new BigDecimal("8900.9997"));
+
+            //Realizamos la comparacion con assertNotEquals
+            assertNotEquals(cuenta2, cuenta1);
+        }
+
+3- Por valor y NO por referencia, para poder hacer esto, debemos de implementar el metodo equals en la clase Cuenta
+
+    - Método equals:
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Cuenta)){
+            return false;
+        }
+        Cuenta c = (Cuenta) obj;
+        if (this.persona == null || this.saldo == null) {
+            return false;
+        }
+        return this.persona.equals(c.getPersona()) && this.saldo.equals(c.getSaldo());
+    }
+
+    - método testReferenciaCuenta()
+    @Test
+    void testReferenciaCuenta() {
+        //Comparando dos objetos cuenta por referencia y NO por valor
+        Cuenta cuenta1 = new Cuenta("John", new BigDecimal("8900.9997"));
+        Cuenta cuenta2 = new Cuenta("John", new BigDecimal("8900.9997"));
+
+        //Realizamos la comparacion con assertNotEquals
+        //assertNotEquals(cuenta2, cuenta1);//true -> false al implementar el metodo equals
+
+        //Comparamos con assertEquals
+        assertEquals(cuenta2, cuenta1); //false -> true al implementar el método equals en Cuenta
+
+        //Para poder implementar la comparacion por valor y NO por referencia,
+        // debemos implementar el método equals en la clase Cuenta
+    }

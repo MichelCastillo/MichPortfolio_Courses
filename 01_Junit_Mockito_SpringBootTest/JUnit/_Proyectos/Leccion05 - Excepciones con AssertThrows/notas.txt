@@ -1,0 +1,33 @@
+Manejo de Excepciones:
+
+1- Implementamos una excepcion: DineroInsuficienteException:
+
+    public class DineroInsuficienteException extends Exception{
+
+        public DineroInsuficienteException(String message) {
+            super(message);
+        }
+    }
+
+2- Creamos el método de Testing: testDineroInsuficienteException
+    //Leccion04
+    @Test
+    void testDineroInsuficienteException() {
+        Cuenta cuenta = new Cuenta("John", new BigDecimal("1000.12345"));
+
+        //Verificamos si descontando mas de lo que tiene, deberia tirar la excepcion creada
+        Exception exception = assertThrows(DineroInsuficienteException.class, () -> {
+            cuenta.debito(new BigDecimal(1500));
+        });
+        //el assertThrows va a devolver una excepcion si corresponde.
+        // aputarmos esa excepcion para comparar el mensaje que recibimos a ver si es el correcto
+        String actual = exception.getMessage();
+        String esperado = "Dinero Insuficiente";
+
+        //Chequeamos
+        assertEquals(esperado, actual);
+
+    }
+
+    Nota: acá comparamos el contenido del mensaje que le mandamos a Exception
+     
