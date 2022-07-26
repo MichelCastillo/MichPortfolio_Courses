@@ -1,0 +1,49 @@
+00_List:
+
+    Structure:
+        - Collection (i)
+            - List (i)
+                - ArrayList
+                - LinkedList
+                - Vector
+                - Stack
+    
+    Features:
+        - Ordered Collections (se refiere a los indices)
+        - Allows Positional access to Elements
+            - List a = new ArrayList();
+            - List a = new LinkedList();
+            - List a = new Vector();
+            - List a = new Stack();
+
+01_ArrayList
+    - Structure:
+        - Resizable or Grow-able array
+    - Features
+        - Allows duplicate Elements
+        - Insertion Order is preserved
+        - Accepts heterogeneous objects
+        - Cada vez que se agrega un objeto nuevo fuera del rango, se crea internamente otro ArrayList, siguiendo la siguiente formula:
+            (x * 3/2) + 1
+            Siendo X el tamaño del ArrayList Original. (/Array de 10 elementos, creará otro de 16);
+    - Important Concepts
+        - Implements/extends Serializable
+        - Implements Clonable (lo que nos permite clonar objetos y compararlos etc)
+        - Implements Random Access, just Marker interface (no tiene métodos dentro) - Any random element can be accessed in same speed
+        - Cuando usar: Cuando queremos leer objetos de determinados índices
+        - Cuando no usar: Cuando queramos añadir elementos en el medio del ArrayList (Operación muy costosa a nivel rendimiento)
+
+02_LinkedList
+    - Structure
+    - Features
+        - Cada elemento de esta colección esta separado:
+            DATA | ADDRESS -> DATA | ADDRESS -> ...
+            Donde ADDRESS apunta al siguiente elemento.
+        - Cada uno de estos elementos recibe el nombre de Nodo
+        - El ultimo elemento de la colección, su ADDRESS es NULL
+        - Allow duplicate elements
+        - Insertion Order is preserved
+        - Accepts heterogeneous objects
+        - null insertion is possible
+        
+

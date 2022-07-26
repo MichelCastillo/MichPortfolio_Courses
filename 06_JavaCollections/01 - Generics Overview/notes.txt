@@ -1,0 +1,50 @@
+Collection:
+	- List (I)
+		- ArrayList
+		- LinkedList
+		- Vector (Legacy class)
+		- Stack
+	- Set (I)
+		- HashSet
+			- LinkedHashSet
+		- SortedSet (I)
+			- NavigableSet (I)
+				- TreeSet
+	- Queue (I)
+		- PriorityQueue
+		- BlockingQueue
+			- PriorityBlockingQueue
+			- LinkedBlockingQueue
+
+Map (I)
+	- HashMap
+		- LinkedHashMap
+	- WeakHashMap
+	- IdentityHashMap
+	- Hashtable (extends Dictionary)
+		- Properties
+	- SortedMap (I)
+		- NavigableMap (I)
+			- TreeMap
+
+
+Collection vs Collections
+
+Collection
+	- Root Interface of Collection Framework
+	- i.e.
+		- List
+		- Set
+		- Queue
+
+Collections:
+	- Utility Class for Collection objects (java.util)
+	- i.e.
+		- sort()
+		- reverse()
+		- shuffle()
+		- binarySearch()
+		- disjoint()
+		- ...
+
+Generics
