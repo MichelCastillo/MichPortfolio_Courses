@@ -1,0 +1,120 @@
+- Recordemos cual es el development process:
+    1. Get a connection to database
+    2. Create a statement
+    3. Execute SQL query
+    4. Process the result set
+- When connecting to a MySQL database, you may encounter this scary warning message.
+    WARN: Establishing SSL connection without server’s identity verification is not recommended
+
+    Your app will continue to work fine … it is just the MySQL database yelling at you.
+
+    Solution
+
+    To get rid of the warning message, append ?useSSL=false to the end of your database connection string.
+
+    For example,
+
+    Replace – jdbc:mysql://localhost:3306/demo
+
+    With – jdbc:mysql://localhost:3306/demo?useSSL=false
+
+    Note that I appended ?useSSL=false to the end.
+
+    That will get rid of the pesky message … whew!
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Inserting Data into the Database
+
+- Vamos a tratar de ejecutar el siguiente statement dentro de la tabla employee:
+    insert into employees (last_name, first_name, email, department, salary)
+    values ('Wright', 'Eric', 'eric.wright@foo.com', 'HR', 33000.00)
+- Development process:
+    1- Get a connection
+    2- Create a statement
+    3- Execute SQL insert -> para ello vamos a usar un método de la clase Statement llamado executeUpdate(<AQUI NUESTRO INSERT STRING>), el cual nos va a devolver el número de filas afectadas
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Updating Data into the Database
+
+- Vamos a tratar de ejecutar el siguiente statement dentro de la tabla employees:
+    update employees set email='john.doe@luv2code.com' where last_name='Doe' and first_name='John'
+- Development process:
+    1- Get a connection
+    2- Create a statement
+    3- Execute SQL update -> para ello vamos a usar un método de la clase Statement llamado executeUpdate(<AQUI NUESTRO INSERT STRING>), el cual nos va a devolver el número de filas afectadas
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Deleting data from the database
+
+- Vamos a tratar de ejecutar el siguiente statement dentro de la tabla employees:
+    delete from employees where last_name='Doe' and first_name='Jhon'
+- Development process:
+    1- Get a connection
+    2- Create a statement
+    3- Execute SQL update -> para ello vamos a usar un método de la clase Statement llamado executeUpdate(<AQUI NUESTRO INSERT STRING>), el cual nos va a devolver el número de filas afectadas
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Creating prepared statements
+
+- Prepared statement: is a precompiled SQL statement, which provides the following benefits:
+    - Makes it easier to set SQL parameter values
+    - Prevent against SQL dependency injection attacks
+    - May improve application performance
+        - SQL statement is precompiled
+
+- Using prepared statements:
+    - Instead of hard coding your SQL values:
+        select * from employees where salary > 80000 and department='Legal'
+    - Set parameter placeholders
+        - Use a question mark to placeholder: ?
+            select * from employees where salary > ? and department=?
+
+- Java coding
+    - Create the prepared statement:
+        PreparedStatement myStmt = myConn.prepareStatement("select * from employees where salary > ? and departmnet = ?");
+    
+        myStmt.setDouble(1, 80000);
+        myStmt.setString(2, "Legal");
+
+        // now execute the query
+        ResultSet myRs = myStmt.executeQuery();
+
+- Insert, Update and Deletes
+    - Can also use prepared statements for insert, update and deletes:
+    PreparedStatement myStmt = myConn.prepareStatement("delete from employees where salary > ? and department = ?");
+
+    // set params
+    myStmt.setDouble(1, 80000);
+    myStmt.setString(2, "Legal");
+
+    // execute statement
+    int rowsAffected = myStmt.executeUpdate(); -> nótese que esta vez es un execute update
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

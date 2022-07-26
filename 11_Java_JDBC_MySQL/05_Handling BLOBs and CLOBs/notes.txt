@@ -1,0 +1,61 @@
+- BLOB
+    - A BLOB (binary large object) is a collection of binary data stored as a single entity in a database
+    - BLOBs are typically documents, images, audio or other binary objects
+    - Note: Database support for BLOBs is NOT universal.
+
+- Create BLOB Column:
+    - Add a column with BLOB datatype:
+        CREATE TABLE 'employees' (
+            'id' int(11) NOT NULL AUTO_INCREMENT,
+            ...
+            'resume' BLOB,
+
+            PRIMARY KEY ('id')
+            ...
+        )
+
+- Writing BLOBs:
+    - Add a resume for an employees
+        - Read local PDF file: sample_resume.pdf
+        - Update database with the binary data
+            // Prepare statement
+            String sql = "update employees set resume=? where email='john.doe@foo.com'";
+
+            PreparedStatement myStmt = myConn.prepareStatement(sql);
+
+            // Set parameter for resume file name
+            File file = new File("sample_resume.pdf");
+            FileInputStream input = new FileInputStream(file);
+
+            myStmt.setBinaryStream(1, input);
+
+            //Execute statement
+            myStmt.executeUpdate();
+
+Reading BLOBs
+    - Read BLOB from DB and write to local file:
+        Statement myStmt = myConn.createStatement();
+        String sql = "update employees set resume=? where email='john.doe@foo.com'";
+        
+        // Execute query
+        myRs = myStmt.executeQuery(sql);
+
+        // Set up a handle to the file
+        File theFile = new File("resume_from_db.pdf");
+        output = new FileOutputStream(theFile);
+
+        // read BLOB and store in output file
+        if (myRs.next()) {
+
+                input = myRs.getBinaryStream("resume");
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    output.write(buffer);
+                }
+        }
+
+/////////////////////////////////////////////////////////////////////////////////
+CLOB
+    - A CLOB (character large object) is a collection of character data stored as a single entity in a database
+    - CLOBs are typically used to stored large text documents (plan text or XML)
+    - Note: Database support for CLOBs are not universal

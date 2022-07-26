@@ -1,0 +1,42 @@
+Defining JDBC Transactions
+
+    - Basically is a unit of work
+    - One or more SQL statements executed together
+        - Either all of the statements are executed - Commit
+        - Or none of the statements are executed - Rollback
+    - By default, the database connection is to auto-Commit
+        - Need to explicitly turn off auto-commit: myConn.setAutoCommit(false);
+    - Developer controls commit or Rollback
+        - myConn.commit();
+        // or
+        - myConn.rollback();
+    - Retrieve the metadata instance:
+        DatabaseMetadata databaseMetadata = myConn.getMetaData();
+    - DatabaseMetaData methods:
+        - getDatabaseProductName();
+        - getDatabaseProductVersion();
+        - getDriverName();
+        - etc
+    - See JavaDoc for details
+        - Google: jdbc databasemetadata
+
+Database Schema
+    - Use DatabaseMetaData to get DB Schema
+    - List of tables
+    - List of column names
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ResultSet metadata
+
+    - Get ResultSet Metadata:
+        - Retrieve the metadata instance:  ResultSetMetaData my RsMetaData = myRs.getMetaData();
+        - Sample of ResultSetMetaData methods:
+            - getColumnName(), getColumnType(), getColumnTypeName()
+            - getPrecision(), getScale(), getColumnCount()
+            - isAutoIncrement(), isNullable(), isCurrency()
+        - See JavaDoc for details:
+            - Google: javadoc jdbc resultset metadata
+
+    
+    

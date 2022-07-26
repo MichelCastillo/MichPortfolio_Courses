@@ -1,0 +1,126 @@
+Topics:
+
+- What are stored procedures:
+    - A group of SQL statements that perform a particular task
+    - Normally created by the DBAs
+    - Created in a SQL lenguage supported by the native database
+    - Can have any combination of input, output and input/output parameters
+
+- Using Callable Statements
+    - To call stored procedures from Java
+        - The JDBC API provides the CallableStatement
+            CallableStatement myCall = myConn.prepareCall("{call some_stored_proc}");
+
+            ...
+            myCall.execute();
+
+
+- Call Stored Procedures that take parameters:
+    - IN parameters
+
+        Procedure declaration:
+
+            PROCEDURE 'increase_salaries_for_department'(
+                IN the_department VARCHAR(64),
+                IN increase_amount DECIMAL(10,2)
+            )
+
+            BEGIN
+                UPDATE employees SET salary = salary + increase_amount
+                WHERE department=the_department
+            END
+
+        Java Coding
+
+            Callable myStmt = myConn.prepareCall(
+                "{call increase_salaries_for_department(?, ?)}"
+            )
+
+            myStmt.setString(1, "Engineering");
+            myStmt.setDouble(2, 10000);
+
+            // now execute the statement
+            myStmt.execute();
+
+    - INOUT parameters
+
+        Procedure declaration
+
+            PROCEDURE 'greet_the_department'(INOUT department VARCHAR(64))
+            BEGIN
+                SET department = concat('Hello to the awesome ', department, ' team!');
+            END
+
+        - Lo que estamos haciendo es actualizar el propio parámetro que estamos recibiendo
+
+        Java Coding
+            Callable myStmt = myConn.prepareCall(
+                "{call greet_the_department(?)}"
+            )
+
+            myStmt.registerOutParameter(1, Types.VARCHAR); // use this for INOUT
+            myStmt.setString(1, "Engineering");
+
+            // Call stored procedure
+            myStmt.execute();
+
+            // Get the value of the INOUT parameter
+            String theResult = myStmt.getString(1);
+
+            System.out.println("The result: " + theResult); -> Hello to the awesome Engineering team!"
+
+
+    - OUT parameters
+
+        Procedure declaration:
+            PROCEDURE `get_count_for_department`(
+                IN the_department VARCHAR(64), 
+                OUT the_count INT)
+            BEGIN
+	
+	            SELECT COUNT(*) INTO the_count -> out parameter
+                FROM employees where department=the_department; -> in parameter
+
+            END
+
+        Java Coding
+            Callable myStmt = myConn.prepareCall(
+                "{call get_count_for_department(?, ?)}"
+            );
+
+            myStmt.setString(1, "Engineering");
+            myStmt.registerOutParameter(2, Types.INTEGER);
+
+            // Call stored procedure
+            myStmt.execute();
+
+            // Get the value of the INOUT parameter
+            String count = myStmt.getString(2);
+
+            System.out.println("The count: " + count); -> 
+    - Result Set:
+        Procedure declaration:
+            PROCEDURE `get_employees_for_department`(IN the_department VARCHAR(64))
+            BEGIN
+
+                SELECT * from employees where department=the_department;
+
+            END
+            - Returns a result set / cursor
+                - First param is the department name
+
+        Java Coding:
+            Callable myStmt = myConn.prepareCall(
+                "{call get_employees_for_department(?)}"
+            );
+
+            myStmt.setString(1, "Engineering");
+
+            // Call stored procedure
+            myStmt.execute();
+
+            // Get the result set
+            myRs = myStmt.getResultSet();
+
+            //Display the result set
+            
