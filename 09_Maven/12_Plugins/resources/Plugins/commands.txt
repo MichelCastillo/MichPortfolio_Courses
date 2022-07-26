@@ -1,0 +1,6 @@
+mvn groupId:artifactId:version:goal
+
+mvn com.bharath:projectinfo-maven-plugin:info-renderer
+
+mvn projectinfo:info-renderer
+

@@ -1,0 +1,17 @@
+Comandos: (CMD)
+    - Listar todas las imagenes en Docker: docker images
+    - Listar todos los containers en Docker: docker ps
+    - Correr Nexus: docker run -d -p 8081:8081 --name nexus sonatype/nexus3
+        - Parámetros:
+            - run: corre el paquete sonatype/nexus3
+            - -d: detachable: no quiero quedar dentro del container una vez que corra, sino que quiero seguir estando en mi OS
+            - -p: utiliza los puertos que siguen
+    - Parar container: docker stop --time=120 <CONTAINER_NAME>
+    - Test Nexus: curl http://localhost:8081/
+    
+
+
+Steps:
+    - Buscamos en google: nexus docker image
+        - Link: https://hub.docker.com/r/sonatype/nexus3/
+    

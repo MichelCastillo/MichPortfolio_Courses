@@ -1,0 +1,5 @@
+- Click on Sign in, ahí nos dice que la contraseña de nuestro usuario esta en /nexus-data/admin.password
+- Ejecutamos: docker container exec nexus cat /nexus-data/admin.password
+    - Este comando nos va a permitir acceder al container nexus y ejecutar el comando cat sobre ese archivo
+    - usamos el usuario admin y la contraseña dentro del documento
+    - Nos pide cambier la pwd, ahora es admin

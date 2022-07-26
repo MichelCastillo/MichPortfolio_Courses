@@ -1,0 +1,6 @@
+com\mich\product\productServices\App.class
+com\mich\product\bo\ProductBO.class
+com\mich\product\dto\Product.class
+com\mich\product\bo\ProductBOImpl.class
+com\mich\product\dao\ProductDAO.class
+com\mich\product\dao\ProductDAOImpl.class

@@ -1,0 +1,12 @@
+mvn archetype:generate -DgroupId=com.bharath -DartifactId=hellomaven -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+archetype:generate -> es el maven goal, describe la unidad de trabajo en maven, en este caso, generamos un proyecto. 
+			Todas las instrucciones que pasamos como -D son parámetros de este goal en particular.
+
+
+-DgroupId=com.bharath -> es como el nombre del paquete donde va a ser almacenado en el repositorio maven
+-DartifactId=hellomaven  -> es el nombre del proyecto
+-DarchetypeArtifactId=maven-archetype-quickstart -> indica el tipo de proyecto que estamos creando 
+-DinteractiveMode=false -> deshabilitamos el modo interactivo
+
+

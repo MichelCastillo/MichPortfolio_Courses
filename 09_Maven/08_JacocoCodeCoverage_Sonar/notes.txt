@@ -1,0 +1,63 @@
+_JaCoCo Code Coverage and Sonar
+	1- Vamos a aprender cómo configuar Jacoco para analizar el coverage de los test en nuestro código
+	2- Luego también vamos a usar Sonar como un dashboard con todos estos metadatos de nuestro proyecto
+
+_Configurando _JaCoCo Code Coverage
+
+	1- Configuracion Jacoco
+	<plugin>
+		<groupId>org.jacoco</groupId>
+		<artifactId>jacoco-maven-plugin</artifactId>
+		<version>0.8.7</version>
+		<executions>
+			<execution>
+				<goals>
+					<goal>prepare-agent</goal>
+				</goals>
+			</execution>
+			<execution>
+				<id>report</id>
+				<phase>test</phase>
+				<goals>
+					<goal>report</goal>
+				</goals>
+			</execution>
+		</executions>
+	</plugin>
+	2- Para poder ejecutar JaCoCo existen 2 pasos:
+		- Inicializar el plugin para poder generar los reportes
+		- Correr el "goal" que va a generar el reporte perse
+	3- Para ejecutar esto: verify -> es un phase en maven que corre y chequea los resultados en test
+		mvn clean verify
+	4- Una vez terminó de correr
+		- Tiramos un Maven update project
+		- Refrescamos el proyecto
+		- Nos vamos a la carpeta target
+		- Carpeta site/jacoco
+		- Abrimos el index.html usando el web browser y ahi vamos a poder observar el coverage de nuestros tests
+
+_ Instalando y configurando Sonar
+	- Una vez descomprimido, nos vamos a la carpeta:
+	C:\Users\luismichel.castillo\Documents\Cursos\Instaladores\SonarQube\sonarqube-9.4.0.54424\bin\windows-x86-64
+	- ejecutamos el StartSonar.bat desde el CMD
+	- accedemos a la consola con admin:Consuelo66
+	- Agregamos la siguiente configuración a .m2 folder (si existe uno, ponemos este encima)
+		<settings>
+			<pluginGroups>
+				<pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+			</pluginGroups>
+			<profiles>
+				<profile>
+					<id>sonar</id>
+					<activation>
+						<activeByDefault>true</activeByDefault>
+					</activation>
+				</profile>
+			</profiles>
+		</settings>
+	- Una vez hecho esto, nos vamos a la carpeta del proyecto y ejecutamos:
+		mvn clean verify sonar:sonar
+	- Dado el error de login issue, vamos al dashboard de sonar, My account, security, security token, generamos un token y ejecutamos
+	mvn clean verify sonar:sonar -Dsonar.login=<TOKEN>
+
+	

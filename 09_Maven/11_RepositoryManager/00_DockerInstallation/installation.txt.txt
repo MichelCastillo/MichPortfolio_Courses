@@ -1,0 +1,2 @@
+How to troubleshoot Docker installation: https://www.c-sharpcorner.com/article/how-to-install-docker-desktop-and-troubleshoot-issues-in-windows-machine/#:~:text=While%20opening%20Docker%2C%20If%20you,After%20installation%20restarts%20the%20computer.
+How to install Linux Kernel on Windows: https://docs.microsoft.com/es-es/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package

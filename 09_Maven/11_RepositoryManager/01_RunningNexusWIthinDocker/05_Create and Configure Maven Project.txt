@@ -1,0 +1,32 @@
+- Creamos un proyecto maven, y nos vamos a su pom.xml
+- Configuramos el distribution management y los repositorios.
+    - Apuntamos a los repositorios con el tag 
+    <repositories>
+        <repository>
+            <id>maven-group</id>
+            <url>http://localhost:8081/repository/maven-group/</url>
+        </repository>
+    </repositories>
+- Configuramos el pom.xml para que haga el deploy de los artefactos derecho a los respectivos maven-snapshots y maven-releases de NEXUS
+    - Nótese que los id's pueden diferir con los de Nexus pero no los URL deben ser exactos
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>http://localhost:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>nexus-releases</id>
+            <url>http://localhost:8081/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
+
+- Build
+    - vamos a la carpeta .m2 y eliminamos la carpeta repository
+    - ejecutamos un mvn install sobre el proyecto
+
+- Deploy
+    - Necesitamos correr un: mvn deploy
+        - Click derecho en el proyecto
+        - Maven Configurations
+        - Maven Build
+        - Le damos un nombre, seleccionamos el proyecto deseado y agregamos deploy al comando

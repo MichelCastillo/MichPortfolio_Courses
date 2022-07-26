@@ -1,0 +1,108 @@
+Properties:
+    - Maven nos permite declarar variables para impedir hardcodeos
+        - Project -> project.*
+        - Buil Directories -> project.build.*
+        - Java System Properties -> os.name
+        - Custom Properties -> my.prop
+    - Sintaxis:
+        ${project.artifactId}
+        - project -> como tal es un objeto implicito que nos permite acceder a todas las propiedades del proyecto
+    - Vamos a usar el projectparent visto anteriormente
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Log Properties
+
+- Tenemos el archivo plugins.xml en la carpeta resources
+- Agregamos un plugin que nos va a permitir acceder a las propiedades del Projecto:
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echoproperties />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+- Una vez agregado, vamos a agregar una nueva configuración para correr maven, le damos el nombre: maven_properties
+- Seleccionamos nuestro proyecto dando click en workspace
+- Goals: validate
+- Corremos la configuración y deberiamos ver algunas de estas propiedades:
+    main:
+    [echoproperties] #Ant properties
+    [echoproperties] #Tue May 10 01:08:12 ART 2022
+    [echoproperties] java.specification.version=17
+    [echoproperties] ant.project.name=maven-antrun-
+    [echoproperties] com.bharath.product\:productservices\:jar=C\:\\Users\\luismichel.castillo\\.m2\\repository\\com\\bharath\\product\\productservices\\1.0\\productservices-1.0.jar
+    [echoproperties] sun.cpu.isalist=amd64
+    [echoproperties] sun.jnu.encoding=Cp1252
+    [echoproperties] project.build.testOutputDirectory=C\:\\Users\\luismichel.castillo\\Documents\\Cursos\\09 - Maven Crash Course\\13_Properties\\project\\productparent\\productweb\\target\\test-classes
+    [echoproperties] project.name=productweb Maven Webapp
+    [echoproperties] settings.localRepository=C\:\\Users\\luismichel.castillo\\.m2\\repository
+    [echoproperties] sun.arch.data.model=64
+    ...
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Use Project Details
+
+- Como bien podemos ver en algunas de las properties, existe project.name: 
+        [echoproperties] project.name=productweb Maven Webapp
+        - Cómo tenemos un proyecto de varios modulos, tendremos varios de este tipo, debido a los multiples pom.xml
+        - Al igual que project.artifactId, project.groupId, etc...
+- Este "project" es un objeto de org.apache.maven.model.Model
+    - Siendo esta clase la que tiene todas estas properties
+- Cómo podemos usar esto ?
+    - Nos vamos al pom.xml del proyecto productweb
+    - ubicamos el tag <finalName></finalName>
+    - En vez de hardcodear "productweb" usamos ${project.artifactId}
+- Una vez cambiado, damos en mvn clean install y podemos observar en la carpeta target que aún se genera el war con el nombre productweb, pero esta vez usando la property
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Access Build Directories
+
+- Estos son: 
+    - project.build.directory -> basicamente apunta a nuestra carpeta target
+    - project.build.outputDirectory  -> es donde van a parar las clases compiladas
+    - project.build.testSourceDirectory -> es donde mvn va a ir a buscar para ejecutar los tests
+    - project.build.sourceDirectory -> apunta a nuestro src/main/java
+- En caso de querer usarlos, es lo mismo que los project details, ${project.build.<nombre>}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Access Java System Properties
+
+- Buscamos en el navegador java system properties
+    - Link: https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+- Buscamos cualquiera de ese listado en el output de mvn, y podemos acceder a ellos mediante ${nombre de la property}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Use Custom Properties
+
+- Vamos a aprender como agregar properties
+- Nos dirigimos al pom.xml del productparent
+- Partimos desde estas properties:
+    <properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+     - Podemos agregar las properties que queramos
+     - Ejemplo:
+        <properties>
+            <maven.compiler.source>1.8</maven.compiler.source>
+            <maven.compiler.target>1.8</maven.compiler.target>
+            <my.war.name>productwebapp</my.war.name>
+        </properties>
+    - Ahora nos vamos al pom.xml del productweb y en el tag <finalName></finalName>, agregamos ese tag <my.war.name></my.war.name>:<finalName>${my.war.name}</finalName>
+    - Con este cambio deberiamos ver el war generado con el nombre productwebapp
+- Con este approach, se nos permite reutilizar por ejemplo, numero de versiones repetidas, declarandolas en un solo lugar

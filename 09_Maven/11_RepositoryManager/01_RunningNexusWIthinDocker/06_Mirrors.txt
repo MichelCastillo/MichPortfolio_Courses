@@ -1,0 +1,5 @@
+Los mirrors actuan como una referencia a aquellos repositorios a donde se va a apuntar por defecto. 
+Por eso si no declaramos un maven-group en nuestro pom.xml, maven va a usar este mirror.
+El * nos indica que esto va a reflejar todos los repositorios en esa URL.
+
+Por ello, en caso de que un POM defina su repositorio, siempre el source de todo va a ser el mirror.

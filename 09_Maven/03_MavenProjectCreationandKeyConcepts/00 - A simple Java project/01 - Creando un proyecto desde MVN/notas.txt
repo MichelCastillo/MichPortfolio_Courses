@@ -1,0 +1,10 @@
+Parados dentro de la carpeta del proyecto que acabamos de crear, si lanzamos mvn install:
+	- Se va a compilar todo el código
+	- Se van a ejecutar los tests que existieran
+	- Se van a empaquetar los resultados
+
+Todos estos resultados van a ir a parar a la clases "target"
+
+Para correr el programa:
+
+java -cp target/hellomaven-1.0-SNAPSHOT.jar com.bharath.App

@@ -1,0 +1,11 @@
+Para compilar sin correr tests
+
+Desde cmd: mvn install -DskipTests
+
+Desde eclipse: Boton derecho + Run as + Maven + Edit configuration
+		Maven Build
+			Agregamos un nombre, y agregamos goal: install
+			Marcamos skip tests
+
+<scope>test</scope> -> Esta dependencia solamente se va a usar para los tests
+<scope>provided</scope> -> Esta dependencia solamente se va a usar para compilar, pero no la queremos en el war final dado que el container ya lo tiene instalado.

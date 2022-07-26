@@ -1,0 +1,11 @@
+How to install MAVEN on EC2 AWS Machine: https://softchief.com/2017/11/07/installing-maven-using-yum-on-ec2-instance-amazon-linux/
+
+Following are the set of commands need to be executed sequentially to install maven.
+
+sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+sudo yum install -y apache-maven
+mvn –version
+And you all set to run any “mvn” (maven) command in ec2 instance.
+
+[ec2-user@ip-123-45-67-89 sudhir]$ mvn –version

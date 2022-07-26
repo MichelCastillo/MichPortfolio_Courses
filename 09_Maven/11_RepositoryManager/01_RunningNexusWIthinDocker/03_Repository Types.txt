@@ -1,0 +1,4 @@
+Repository types:
+    - proxy: actuaran como proxy del repositorio central de Maven, o de cualquier otro repositorio Maven presente. Van a almacenar todas las depedencias de esos repositorios.
+    - hosted: nos sirve para almacenar/hostear nuestros artefactos, como jars, wars (snapshots & releases)
+    - group: no es un repositorio per-se, sino que es una colección de ellos. Por ejemplo, en vez de tener maven-releases, maven-snapshots y maven-central, podemos crear un grupo para colocar a estos 3 dentro. 

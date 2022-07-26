@@ -1,0 +1,2 @@
+- Introduction
+    - Vamos a aprender como customizar plugins como compiler, surefire, jar, war definiendolos dentro de los POM xml.

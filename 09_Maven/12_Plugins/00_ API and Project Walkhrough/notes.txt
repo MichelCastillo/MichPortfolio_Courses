@@ -1,0 +1,220 @@
+- Para poder crear un plugin en Maven se debe usar el packaging maven-plugin
+    <packaging>maven-plugin</packaging>
+- Definimos un Mojo que se va a traducir como un "goal" en nuestro proyecto Maven
+- Como extiende de la Clase AbstractMojo, implementa varios métodos, pero el unico que es necesario sobreescribir es el execute()
+- Este método sera ejecutado cuando maven venga a ejecutar este plugin
+- A su vez podemos asociar este Mojo puntual a una fase de LifeCycle en particular, en este caso:
+    defaultPhase = LifeCyclePhase.COMPILE
+- Dependencias a usar en este armado de plugin:
+    <dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>${maven-plugin-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>${maven-plugin-annotations.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>${maven-project.version}</version>
+		</dependency>
+	</dependencies>
+- Una vez que creamos el Mojo, necesitamos un plugin para correrlo:
+    <build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${maven-plugin-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Mojo Code
+- Cuando Maven va a buscar una implementación de un Mojo, pueden ocurrir excepciones:
+    - MojoExecutionException -> la cual se va a lanzar por errores en la codificacion del método, y el build se va a marcar como BUILD ERROR
+    - MojoFailureException -> A este tipo de expeciones las vamos a arrojar cuando tengamos EXCEPCIONES ESPERADAS, compilation erros, test fields, etc. Maven va a marcar al build como BUILD FAILURE
+- Podemos acceder al log de Maven mediante el método getLog();
+- Maven inyectará el proyecto para el cual estamos usando este plugin mediante: 
+    @Parameter(defaultValue = "${project}", required = true, readonly = true)
+	MavenProject project;
+    - Con esto podemos acceder a todas las dependencias del proyecto
+- A su vez, podemos inyectar custom properties:
+    @Parameter(property = "scope")  
+	String scope;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Create the plugin project
+
+- Creamos un nuevo proyecto maven, pero esta vez usando el archetype maven-archetype-plugin
+- convención de artifact id: <NOMBRE DEL PROYECTO>-maven-plugin
+- Eliminamos todo desde <name> en adelante.
+- Agregamos las dependencias a nuestro proyecto:
+    <dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>${maven-plugin-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-tools</groupId>
+			<artifactId>maven-plugin-annotations</artifactId>
+			<version>${maven-plugin-annotations.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>${maven-project.version}</version>
+		</dependency>
+	</dependencies>
+    - maven-plugin-api -> contiene todas las clases que vamos a usar para crear nuestro plugin custom. Es de donde viene la clase AbstractMojo
+    - maven-plugin-annotations -> es donde todas las anotaciones vienen, por ejemplo @Mojo
+    - maven-project -> esto nos sirve para usar el objeto MavenProject
+- Agregamos el plugin maven-plugin-plugin:
+    <build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${maven-plugin-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+- Bajo el tag properties, indicamos la version de cada uno de los plugins y de el compiler de maven.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Implement Mojo
+
+- Creamos nuestra clase que extienda de AbstractMojo
+- Sobreescribiremos el método execute();
+- Accedemos a los log sde maven mediante el método getLog().info(...); -> info es el nivel del log
+- Agregamos un nombre a nuestro Mojo agregando name dentro del @Mojo(name = "info-renderer", defaultPhase = LifeCyclePhase.COMPILE)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Test plugin
+
+- Para poder ejecutar esto:
+    - mvn groupId:artifactId:version:goal
+        - version -> optional
+        - goal -> Es el nombre de nuestro mojo, en este caso, info-renderer
+        - Cómo quedaría: mvn com.bharath:projectoinfo-maven-plugin:info-renderer
+        - Sin la versión: mvn projectinfo:info-renderer
+- Podemos hacerlo desde la linea de comandos, o desde Eclipse
+    - vamos a Maven - Run Configurations
+    - Agregamos un nombre a la configuración
+    - Hacemos click en Workspace para seleccionar nuestro proyecto
+    - y agregamos en goals: com.bharath:projectinfo-maven-plugin:info-renderer
+- Parte de la salida:
+    ...
+    [INFO] --- projectinfo-maven-plugin:0.0.1-SNAPSHOT:info-renderer (default-cli) @ projectinfo-maven-plugin ---
+    [INFO] Mojos are cool
+    [INFO] Project Name: projectinfo-maven-plugin Artifact Id: projectinfo-maven-plugin
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  4.569 s
+    [INFO] Finished at: 2022-05-10T00:13:56-03:00
+    [INFO] ------------------------------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Shorthand Syntax
+- Ahora vamos a usar esta notación: mvn projectinfo:info-renderer
+- Cuando creamos nuestro proyecto y colocamos en el ArtifactId <nombre>-maven-plugin -> automaticamente nos va a permitir esta notación
+- Pero también, tenemos que agregar el archivo de configuración adjunto en nuestra carpeta -m2, para agregar los pluginGroup QUE ES BASICAMENTE el groupId
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <pluginGroups>
+            <pluginGroup>com.bharath</pluginGroup>
+        </pluginGroups>
+    </settings>
+    - Si no agregamos esa configuración, maven va a buscar la configuración dentro de 2 paquetes:
+        - org.apache.maven.plugins
+        - org.codehaus.mojo
+- Creamos otra configuración pero ahora usando la notación de arriba
+    - NOTA: atención ! en vez de ahora ser "projectinfo-maven-plugin" es solo "projectinfo"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Access Project info
+- Dentro de la clase ProjectInfoMojo, inyectamos el proyecto a traves de:
+    @Parameter(defaultValue = "${project}", -> Cuando maven haga el build de todo el proyecto, lo va a inyectar aquí (notese que se puede usar otro proyecto)
+        required = true, -> 
+        readonly = true) -> Como no queremos cambiar los detalles del proyecto, lo declaramos como readonly
+	MavenProject project;
+- Imprimimos el nombre del PROYECTO que estamos inyectando:
+    - getLog().info("Project Name: " + project.getName() + " Artifact Id: " + project.getArtifactId());
+- Para correr esto, podemos dejar solo los goals en vez de incluir clean install projectinfo:info-renderer
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Access dependencies:
+
+List<Dependency> dependencies = project.getDependencies();
+dependencies.stream().forEach(d -> getLog().info(d.toString()));
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Passing additional parameters
+
+- Pasamos un scope en las dependencies:
+    @Parameter(property = "scope")
+	String scope;
+
+- Agregamos ese filtro a nuestro stream de dependencies
+    List<Dependency> dependencies = project.getDependencies();
+    dependencies.stream().filter(d -> scope != null && scope.equals(d.getScope()))
+				.forEach(d -> getLog().info(d.toString()));
+
+- Ahora, para agregar el scope x el cual queremos filtrar, lo pasamos en los goals de una nueva configuración:
+    clean install projectinfo:info-renderer -Dscope=test
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Using the plugin in other Projects
+
+- Debemos hacer uso de el archivo useplugin.xml:
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>com.bharath</groupId>
+				<artifactId>projectinfo-maven-plugin</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>info-renderer</goal> -> artifactId de nuestro proyecto anterior
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scope>test</scope> -> custom scope que agregamos para hacer los filtros
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<maven.compiler.source>16</maven.compiler.source>
+		<maven.compiler.target>16</maven.compiler.target>
+		<java.version>14</java.version>
+	</properties>
+- Creamos un nuevo proyecto maven, usando el archetype maven-archetype-quickstart
+- Vamos al POM.xml del proyecto recién creado, y agregamos esas lineas
+- Agregamos una nueva configuracion para correr Maven pero esta vez usamos como goal clean compile (así lo definimos)
+- Output:
+    [INFO] --- projectinfo-maven-plugin:0.0.1-SNAPSHOT:info-renderer (default) @ use-projectinfo-plugin ---
+    [INFO] Mojos are cool -> lineas del plugin anterior
+    [INFO] Project Name: use-projectinfo-plugin Artifact Id: use-projectinfo-plugin -> lineas del plugin anterior
+    [INFO] Dependency {groupId=org.junit.jupiter, artifactId=junit-jupiter-engine, version=5.7.1, type=jar}
+    [INFO] Dependency {groupId=org.junit.jupiter, artifactId=junit-jupiter-params, version=5.7.1, type=jar}
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------

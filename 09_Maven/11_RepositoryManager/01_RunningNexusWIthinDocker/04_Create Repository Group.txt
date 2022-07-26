@@ -1,0 +1,43 @@
+Steps:
+    - Click en la ruedita (Server administration and configuration)
+    - Click on Repositories
+    - Click on Create Repository
+    - Select Maven2(group)
+    - Colocamos el nombre maven-group
+    - Una vez creado, click en copy sobre el repositorio creado
+    - Volvemos a la cajita del welcome y nos vamos a browse y chequeamos que el repo esté alli
+
+Configurando el XML
+    - Archivo settings.xml en la carpeta resources
+    - Dentro de ese archivo:
+        - <servers></servers> -> acá vamos a poner todos los detalles para la autenticación
+        - <mirrors></mirrors> nos dice el source de las cosas que estamos usando
+    - Contenido del archivo settings.xml en nuestro caso (no necesariamente vamos a usar el usuario admin): - ESTO VA EN LA CARPETA .m2
+            <?xml version="1.0" encoding="UTF-8"?>
+            <settings xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+
+            <servers>
+                <server>
+                    <id>nexus-snapshots</id>
+                    <username>admin</username>
+                    <password>admin</password>
+                </server>
+                <server>
+                    <id>nexus-releases</id>
+                    <username>admin</username>
+                    <password>admin</password>
+                </server>
+            </servers>
+
+            <mirrors>
+                <mirror>
+                    <id>central</id>
+                    <name>central</name>
+                    <url>http://localhost:8081/repository/maven-group/</url>
+                    <mirrorOf>*</mirrorOf>
+                </mirror>
+            </mirrors>
+
+            </settings>

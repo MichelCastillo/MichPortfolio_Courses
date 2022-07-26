@@ -1,0 +1,67 @@
+_Profiles:
+    - Introduction: Basicamente la idea es crear un proyecto que dependiendo el environment en donde nos encontremos, tome ciertas configuraciones a la hora del deploy:
+	- DEV
+	- TEST
+	- PROD
+	Dependiendo de cual sea el environment, se van a aplicar ciertas configuraciones. 
+
+	- Paso a paso:
+		1- Creamos un proyecto maven, llamado profilesdemo usando maven-archetype-quickstart
+		2- Creamos una Source Folder en nuestro proyecto, llamada profiles (debajo de /src/main)
+		3- Creamos 3 folders ahi, dev, test y prod con sus respectivos application.properties
+		4- Configuarmos los profiles en Maven para que tome estas configuraciones dependiendo del ambiente en el que nos encontremos
+		5- Agregamos después del build en nuestro pom.xml, y antes de que termine la etiqueta </project>
+
+			<profiles>
+  
+				<profile>
+					<id>dev</id>
+					<properties>
+						<build.profile.id>dev</build.profile.id>
+					</properties>
+					<build>
+						<resources>
+							<resource>
+								<directory>src/main/profiles/dev</directory>
+							</resource>
+						</resources>
+					</build>
+				</profile>
+			
+				<profile>
+					<id>test</id>
+					<properties>
+						<build.profile.id>test</build.profile.id>
+					</properties>
+					<build>
+						<resources>
+							<resource>
+								<directory>src/main/profiles/test</directory>
+							</resource>
+						</resources>
+					</build>
+				</profile>
+				
+				<profile>
+					<id>prod</id>
+					<properties>
+						<build.profile.id>prod</build.profile.id>
+					</properties>
+					<build>
+						<resources>
+							<resource>
+								<directory>src/main/profiles/prod</directory>
+							</resource>
+						</resources>
+					</build>
+				</profile>
+				
+				</profiles>
+		6- Para ejecutar maven usando estos perfiles, se usa el comando:
+			mvn install -p<NOMBRE_DEL_PROFILE>
+			Ejemplo:
+			mv install -pdev
+
+		6-a También es posible agregalo desde el Eclipse, haciendo boton derecho sobre el proyecto -> Properties -> Maven -> Agregamos el nombre del perfil
+
+		7- Ejecutamos el comando maven o desde el eclipse hacemos click en maven clean -> maven install

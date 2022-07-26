@@ -1,0 +1,29 @@
+_Profiles:
+    - Existen 6 perfiles:
+        - compile: todas las dependencias van a estar disponibles a la hora del build, test y run (es el perfil x defecto)
+        - runtime: Se consideran aquellas dependencias que van a estar durante en test y run, pero no durante la compilación
+        - provided: Se incluyen acá todas las dependencias necesarias para el build test  y run pero que no son necesarias de exportarlas a donde las vayamos a deployar.
+        - test: dependencias que van a estar disponibles para compilar los test y correrlos, por ejemplo Junit
+        - system: <systemPath></systemPath>
+                ${basedir}/war/WEB-IN/lib/extDependency.jar -> se utiliza para indicar el uso de dependencias externas necesarias para el proyecto
+        - import: se usa en proyectos basados en POM, se va a abordar durante el módulo dependecyManagement
+
+_Dependency Management
+    - Para poder llevar un control sobre la version de una misma dependencia en un proyecto con varios modulos, podemos usar el tag <dependecyManagement></dependecyManagement> dentro del productparent.pom (para el ejemplo usamos junit)
+                    <dependencyManagement>
+                        <dependency>
+                            <groupId>junit</groupId>
+                            <artifactId>junit</artifactId>
+                            <version>4.4</version>
+                        </dependency>
+                    </dependencyManagement>
+    - Con esto, no es necesario definir ni en el parent ni los childs necesitan declarar esa dependencia para usar la versión 4.4 (en los childs eliminamos solo la version)
+    - Pero en caso de que algun child redefina la version, Maven va a usar esa, en vez de la del parent
+
+_PluginManagement -> lo mismo que el dependecyManagement pero esta vez para los plugins
+
+    <build>
+		<pluginManagement>
+			...
+		</pluginManagement>
+	</build>
